@@ -69,12 +69,13 @@ public static class Formatter
 
     private static void AppendRow(StringBuilder sb, string[] cells, int[] widths)
     {
+        var line = new StringBuilder();
         for (var i = 0; i < cells.Length; i++)
         {
-            // The last column is not padded, to avoid trailing spaces.
-            sb.Append(i == cells.Length - 1 ? cells[i] : cells[i].PadRight(widths[i] + 2));
+            line.Append(i == cells.Length - 1 ? cells[i] : cells[i].PadRight(widths[i] + 2));
         }
 
-        sb.Append('\n');
+        // Empty trailing cells would otherwise leave trailing spaces.
+        sb.Append(line.ToString().TrimEnd()).Append('\n');
     }
 }
